@@ -167,6 +167,22 @@ http://127.0.0.1:8000/
 
 ## 🔐 Authentication (JWT)
 
+### Register new user
+
+```
+POST /api/register
+```
+
+**Request body**
+```json
+{
+  "username": "admin",
+  "password": "password"
+}
+```
+---
+
+
 ### Login
 
 ```
