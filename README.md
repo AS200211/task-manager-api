@@ -309,3 +309,85 @@ Tests cover:
 
 Akash Singhal 
 Backend Developer – Django / Django REST Framework
+
+
+
+
+
+---
+
+## 📝 Additional Notes & Design Decisions
+
+### 🔐 Authentication Strategy
+JWT-based authentication is used to ensure stateless and scalable API access.  
+Short-lived access tokens are combined with refresh tokens to balance security and usability.
+
+---
+
+### 👥 Role-Based Access Control (RBAC)
+A custom `role` field is implemented on the user model to differentiate between **Admin** and **Regular Users**.
+
+- Regular users can only manage their own tasks
+- Admin users can access and manage tasks across all users
+- Django superusers are treated as admin users for API access
+
+This approach provides flexibility beyond Django’s default permission system.
+
+---
+
+### 🧩 Why ModelViewSet?
+`ModelViewSet` was chosen for task APIs to:
+- Reduce boilerplate code
+- Ensure consistent REST patterns
+- Easily integrate pagination, permissions, and filtering
+
+---
+
+### 🛡 Global Exception Handling
+All exceptions are handled centrally to:
+- Maintain consistent API responses
+- Improve frontend error handling
+- Avoid leaking internal error details
+
+This also simplifies logging and debugging in production.
+
+---
+
+### 📄 Swagger Documentation
+Custom authentication views were implemented to expose request bodies in Swagger for login and refresh endpoints, ensuring the API documentation is fully interactive and developer-friendly.
+
+---
+
+### ⚙️ Environment-Based Configuration
+Pagination settings and sensitive configuration values are externalized using environment variables to support different environments (development, staging, production).
+
+---
+
+### 🧪 Testing Approach
+Unit tests focus on:
+- Authentication enforcement
+- Role-based access restrictions
+- Task CRUD correctness
+- Pagination compatibility
+
+Tests are written to be isolated, repeatable, and database-safe.
+
+---
+
+### 🔒 Security Considerations
+- Passwords are securely hashed using Django’s built-in mechanisms
+- Admin role assignment is restricted and not exposed via public APIs
+- JWT tokens are required for all task-related endpoints
+
+---
+
+### 🚀 Future Improvements
+- Add task filtering and search
+- Introduce soft deletion and audit logs
+- Add rate limiting for authentication endpoints
+- Containerize the application using Docker
+- Replace SQLite with PostgreSQL for production
+
+---
+
+This project was designed and implemented with scalability, security, and maintainability in mind, following Django and REST API best practices.
