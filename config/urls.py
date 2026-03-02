@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from apps.accounts.views import LoginView, RefreshView, RegisterView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -19,8 +20,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Auth
-    path('api/auth/login/', TokenObtainPairView.as_view()),
-    path('api/auth/refresh/', TokenRefreshView.as_view()),
+    path("api/auth/login/", LoginView.as_view()),
+    path("api/auth/refresh/", RefreshView.as_view()),
+    path("api/auth/register/", RegisterView.as_view()),
 
     # Tasks
     path('api/tasks/', include('apps.tasks.urls')),

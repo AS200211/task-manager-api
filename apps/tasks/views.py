@@ -12,7 +12,7 @@ class TaskViewSet(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.role == 'admin':
+        if user.is_superuser or user.role == 'admin':
             return Task.objects.all()
         return Task.objects.filter(user=user)
 
